@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://c5v7yj8kqwxh8"]
+
+[ext_resource type="Script" uid="uid://inplwimwk2dj" path="res://scripts/fulcrum_lever.gd" id="1_lever"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fulcrum"]
+radius = 1.0
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_cnwh2"]
+friction = 0.43
+bounce = 0.4
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lever"]
+size = Vector2(800, 20)
+
+[node name="FulcrumSystem" type="Node2D" unique_id=252068649]
+
+[node name="FulcrumPoint" type="StaticBody2D" parent="." unique_id=186260497]
+
+[node name="ColorRect" type="ColorRect" parent="FulcrumPoint" unique_id=1372302545]
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+color = Color(0.3, 0.3, 0.3, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FulcrumPoint" unique_id=1407392627]
+shape = SubResource("CircleShape2D_fulcrum")
+
+[node name="FulcrumLever" type="RigidBody2D" parent="." unique_id=1256389916]
+collision_layer = 5
+collision_mask = 2
+mass = 100.0
+physics_material_override = SubResource("PhysicsMaterial_cnwh2")
+can_sleep = false
+linear_damp = 10.0
+angular_damp = 3.0
+script = ExtResource("1_lever")
+max_rotation_angle = 45.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FulcrumLever" unique_id=864029450]
+shape = SubResource("RectangleShape2D_lever")
+
+[node name="ColorRect" type="ColorRect" parent="FulcrumLever" unique_id=714475023]
+offset_left = -400.0
+offset_top = -10.0
+offset_right = 400.0
+offset_bottom = 10.0
+color = Color(0.6, 0.4, 0.2, 1)
+
+[node name="PinJoint2D" type="PinJoint2D" parent="." unique_id=886519786]
+node_a = NodePath("../FulcrumPoint")
+node_b = NodePath("../FulcrumLever")
+bias = 0.9
+angular_limit_enabled = true
+angular_limit_lower = -0.7853982
+angular_limit_upper = 0.7853982
