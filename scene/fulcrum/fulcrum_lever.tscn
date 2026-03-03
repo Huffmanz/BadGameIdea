@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c5v7yj8kqwxh8"]
 
-[ext_resource type="Script" uid="uid://inplwimwk2dj" path="res://scripts/fulcrum_lever.gd" id="1_lever"]
+[ext_resource type="Script" uid="uid://inplwimwk2dj" path="res://scene/fulcrum/fulcrum_lever.gd" id="1_lever"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_fulcrum"]
 radius = 1.0
@@ -10,7 +10,7 @@ friction = 0.43
 bounce = 0.4
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lever"]
-size = Vector2(800, 20)
+size = Vector2(500, 20)
 
 [node name="FulcrumSystem" type="Node2D" unique_id=252068649]
 
@@ -32,25 +32,57 @@ collision_mask = 2
 mass = 100.0
 physics_material_override = SubResource("PhysicsMaterial_cnwh2")
 can_sleep = false
-linear_damp = 10.0
+continuous_cd = 2
+linear_damp = 20.0
+angular_damp_mode = 1
 angular_damp = 3.0
 script = ExtResource("1_lever")
+lever_length = 200.0
 max_rotation_angle = 45.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FulcrumLever" unique_id=864029450]
 shape = SubResource("RectangleShape2D_lever")
 
 [node name="ColorRect" type="ColorRect" parent="FulcrumLever" unique_id=714475023]
-offset_left = -400.0
+offset_left = -250.0
 offset_top = -10.0
-offset_right = 400.0
+offset_right = 250.0
 offset_bottom = 10.0
+pivot_offset = Vector2(250, 10)
 color = Color(0.6, 0.4, 0.2, 1)
 
 [node name="PinJoint2D" type="PinJoint2D" parent="." unique_id=886519786]
 node_a = NodePath("../FulcrumPoint")
 node_b = NodePath("../FulcrumLever")
-bias = 0.9
+bias = 0.5
 angular_limit_enabled = true
 angular_limit_lower = -0.7853982
 angular_limit_upper = 0.7853982
+
+[node name="DampedSpringJoint2D" type="DampedSpringJoint2D" parent="." unique_id=1733616299]
+position = Vector2(-240, -50)
+node_a = NodePath("../StaticBody2D")
+node_b = NodePath("../FulcrumLever")
+bias = 0.9
+disable_collision = false
+
+[node name="DampedSpringJoint2D2" type="DampedSpringJoint2D" parent="." unique_id=589491201]
+position = Vector2(241, -50)
+node_a = NodePath("../StaticBody2D2")
+node_b = NodePath("../FulcrumLever")
+bias = 0.9
+disable_collision = false
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=737599628]
+position = Vector2(-240, -50)
+collision_layer = 0
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=916802648]
+shape = SubResource("CircleShape2D_fulcrum")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="." unique_id=1178170531]
+position = Vector2(241, -50)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2" unique_id=1096397405]
+shape = SubResource("CircleShape2D_fulcrum")

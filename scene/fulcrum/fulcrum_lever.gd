@@ -15,7 +15,7 @@ func _ready() -> void:
 	rotation = 0.0
 
 func _physics_process(_delta: float) -> void:
-	_enforce_rotation_limits()
+	#_enforce_rotation_limits()
 	
 	# Dampen small movements to prevent drift
 	if abs(angular_velocity) < 0.01:
@@ -23,15 +23,11 @@ func _physics_process(_delta: float) -> void:
 	if linear_velocity.length() < 0.1:
 		linear_velocity = Vector2.ZERO
 	
-	# If no one is on the lever, slowly return to neutral
-	var lever_surface = get_node_or_null("LeverSurface")
-	if lever_surface and lever_surface.has_method("has_active_affectors"):
-		if not lever_surface.has_active_affectors():
-			# Apply small torque toward neutral position
-			var angle = rotation
-			if abs(angle) > 0.01:
-				var return_torque = -angle * 500.0
-				apply_torque(return_torque)
+	# Apply small torque toward neutral position
+	var angle = rotation
+	if abs(angle) > 0.01:
+		var return_torque = -angle * 500.0
+		apply_torque(return_torque)
 
 func _enforce_rotation_limits() -> void:
 	var angle_deg = rad_to_deg(rotation)

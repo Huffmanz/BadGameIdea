@@ -1,30 +1,31 @@
 [gd_scene format=3 uid="uid://bm8xfj3k5po7r"]
 
-[ext_resource type="Script" uid="uid://bd1bni1fdnnl4" path="res://scripts/player.gd" id="1_player"]
+[ext_resource type="Script" uid="uid://bd1bni1fdnnl4" path="res://scene/character/player/player.gd" id="1_player"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3vyb7"]
-radius = 15.0
+radius = 8.0
 
 [node name="Player" type="RigidBody2D" unique_id=1752749248]
 collision_layer = 2
-collision_mask = 13
+collision_mask = 15
 mass = 5.0
 can_sleep = false
 lock_rotation = true
+continuous_cd = 1
 script = ExtResource("1_player")
 move_force = 500.0
-jump_force = 800.0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1270897529]
-position = Vector2(1, -15)
-shape = SubResource("CircleShape2D_3vyb7")
+jump_force = 1000.0
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1498015291]
-offset_left = -20.0
-offset_top = -60.0
-offset_right = 20.0
+offset_left = -8.0
+offset_top = -24.0
+offset_right = 8.0
 color = Color(0.2, 0.6, 1, 1)
 
 [node name="GroundCheck" type="RayCast2D" parent="." unique_id=1181396929]
-position = Vector2(0, -31)
-target_position = Vector2(0, 41)
+position = Vector2(0, -5)
+target_position = Vector2(0, 10)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1270897529]
+position = Vector2(0, -8)
+shape = SubResource("CircleShape2D_3vyb7")

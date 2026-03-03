@@ -7,14 +7,17 @@ enum State { IDLE, WALKING, JUMPING, FALLING, SLAMMING }
 @export var max_speed: float = 200.0
 @export var jump_force: float = 25000.0
 @export var air_control: float = 0.3
-@export var ground_drag: float = 5.0
 
 @onready var ground_check_ray: RayCast2D = $GroundCheck
+
+var lever : RigidBody2D = null
 
 var state: State = State.IDLE
 var is_grounded: bool = false
 var fall_time: float = 0.0
 var move_input: float = 0.0
+
+var save_mass: float = 1.0
 
 func _ready() -> void:
 	# RigidBody2D settings
@@ -23,16 +26,21 @@ func _ready() -> void:
 	linear_damp = 0.0
 	contact_monitor = true
 	max_contacts_reported = 4
+	save_mass = mass
 
 func _physics_process(delta: float) -> void:
 	_check_grounded()
 	_update_state(delta)
 	_apply_movement(delta)
 
-func _check_grounded() -> void:
+func _check_grounded() -> void:	
 	if ground_check_ray:
 		ground_check_ray.force_raycast_update()
 		is_grounded = ground_check_ray.is_colliding()
+		if is_grounded and not lever:
+			lever = ground_check_ray.get_collider() as RigidBody2D
+		if state != State.SLAMMING and is_grounded:
+			mass = save_mass
 
 func _update_state(delta: float) -> void:
 	if is_grounded:
@@ -58,19 +66,21 @@ func _apply_movement(delta: float) -> void:
 		var target_velocity = move_input * max_speed
 		var velocity_diff = target_velocity - linear_velocity.x
 		var force = velocity_diff * move_force * force_multiplier * delta
-		print("Applying force: ", force)
 		apply_central_force(Vector2(force, 0))
 	
 
 func jump() -> void:
 	if is_grounded:
-		print("Jumping, jumpforce: ", jump_force)	
 		apply_central_impulse(Vector2(0, -jump_force))
 		state = State.JUMPING
+
+		if lever:
+			lever.apply_impulse(Vector2.UP * jump_force / 2.0, global_position)
 
 func start_slam() -> void:
 	if not is_grounded and state != State.SLAMMING:
 		state = State.SLAMMING
+		mass = save_mass * 2.0
 		linear_velocity.y = max_speed * 5.0  # Fast downward velocity
 
 func get_move_input() -> float:
