@@ -18,8 +18,6 @@ var is_grounded: bool = false
 var fall_time: float = 0.0
 var move_input: float = 0.0
 
-var save_mass: float = 1.0
-
 func _ready() -> void:
 	# RigidBody2D settings
 	lock_rotation = true
@@ -27,7 +25,6 @@ func _ready() -> void:
 	linear_damp = 0.0
 	contact_monitor = true
 	max_contacts_reported = 4
-	save_mass = mass
 
 func _physics_process(delta: float) -> void:
 	_check_grounded()
@@ -40,13 +37,38 @@ func _check_grounded() -> void:
 		is_grounded = ground_check_ray.is_colliding()
 		if is_grounded and not lever:
 			lever = ground_check_ray.get_collider() as RigidBody2D
+		if state == State.FALLING and is_grounded:
+			var offset = global_position - lever.global_position
+			lever.apply_impulse(Vector2.DOWN * slam_force * (fall_time + 1.0), offset)
+
+			var side = sign(lever.global_position.x - global_position.x)
+			#find all other characters on the lever and apply an impulse to them
+			var characters = lever.get_tree().get_nodes_in_group("character")
+			for character in characters:
+				if character == self or !character.is_grounded:
+					continue
+				var character_side = sign(lever.global_position.x - character.global_position.x)
+				if character_side != side:
+					launch_character(character, character.jump_force / 4.0)
 		if state == State.SLAMMING and is_grounded:
-			mass = save_mass
-			if lever:
-				print(fall_time)
-				var offset = global_position - lever.global_position
-				lever.apply_impulse(Vector2.DOWN * slam_force * (fall_time + 1.0), offset)
-			
+			var offset = global_position - lever.global_position
+			lever.apply_impulse(Vector2.DOWN * slam_force * (fall_time + 1.0), offset)
+
+			var side = sign(lever.global_position.x - global_position.x)
+			#find all other characters on the lever and apply an impulse to them
+			var characters = lever.get_tree().get_nodes_in_group("character")
+			for character in characters:
+				if character == self or !character.is_grounded:
+					continue
+				var character_side = sign(lever.global_position.x - character.global_position.x)
+				if character_side != side:
+					launch_character(character, character.jump_force)
+
+
+
+func launch_character(character: CharacterBase, force: float) -> void:
+	var offset = character.global_position - lever.global_position
+	character.apply_impulse(Vector2.DOWN * force, offset)
 
 func _update_state(delta: float) -> void:
 	if is_grounded:
