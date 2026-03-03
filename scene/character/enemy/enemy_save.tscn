@@ -8,14 +8,15 @@ radius = 8.0
 [node name="Enemy" type="RigidBody2D" unique_id=217799125]
 collision_layer = 2
 collision_mask = 13
-mass = 5.0
+mass = 2.0
 can_sleep = false
 lock_rotation = true
 continuous_cd = 2
 script = ExtResource("1_0r8mk")
 patrol_distance = 50.0
 jump_chance = 0.1
-jump_force = 2000.0
+move_force = 500.0
+jump_force = 800.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=337950549]
 position = Vector2(0, -8)

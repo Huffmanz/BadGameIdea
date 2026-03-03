@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://sbpofqbqkvxd"]
+
+[ext_resource type="Script" uid="uid://b3cilm74h6rwb" path="res://ui/wave_timer.gd" id="1_kv743"]
+
+[node name="WaveTimeUI" type="CanvasLayer" unique_id=1050565673]
+script = ExtResource("1_kv743")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1938593869]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_top = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1336737164]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="WaveNumberUI" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1260867940]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="WaveTextLabel" type="Label" parent="MarginContainer/VBoxContainer/WaveNumberUI" unique_id=162464300]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0.227451, 0.0352941, 0.0666667, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 24
+text = "WAVE"
+
+[node name="WaveNumberLabel" type="Label" parent="MarginContainer/VBoxContainer/WaveNumberUI" unique_id=1763817347]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_colors/font_outline_color = Color(0.227451, 0.0352941, 0.0666667, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 24
+text = "1"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1722573215]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+
+[node name="WaveTimeLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=1943745914]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_outline_color = Color(0.227451, 0.0352941, 0.0666667, 1)
+theme_override_constants/outline_size = 8
+text = "0:00"

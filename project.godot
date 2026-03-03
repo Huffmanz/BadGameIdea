@@ -11,9 +11,14 @@ config_version=5
 [application]
 
 config/name="BadIdeaJam"
-run/main_scene="res://scene/main.tscn"
+run/main_scene="res://levels/main.tscn"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+GameEvents="*uid://dv6md3rp8f43b"
+ScreenTransition="*uid://0bwyg28cup63"
 
 [display]
 
@@ -23,6 +28,10 @@ window/size/window_width_override=1280
 window/size/window_height_override=720
 window/stretch/mode="canvas_items"
 window/stretch/aspect="keep_width"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/shaker/plugin.cfg")
 
 [input]
 

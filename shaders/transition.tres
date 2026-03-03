@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://blt4on5o5sm88"]
+
+[ext_resource type="Shader" uid="uid://54t1r181d8dj" path="res://shaders/transition.gdshader" id="1_2cswg"]
+[ext_resource type="Texture2D" uid="uid://b704y421d4cdq" path="res://assets/screen_transition.png" id="2_bu3ln"]
+
+[resource]
+shader = ExtResource("1_2cswg")
+shader_parameter/transition_color = Color(0, 0, 0, 1)
+shader_parameter/transition_texture = ExtResource("2_bu3ln")
+shader_parameter/percent = 1.0

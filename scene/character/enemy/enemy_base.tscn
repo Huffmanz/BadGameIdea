@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://bb6ec1vnraawc"]
+
+[ext_resource type="PackedScene" uid="uid://ducvxidcmaamh" path="res://scene/character/character_base.tscn" id="1_ta3mb"]
+[ext_resource type="Script" uid="uid://dcv2e8awe4ilr" path="res://scene/character/enemy/enemy.gd" id="2_to0d4"]
+
+[node name="EnemyBase" unique_id=2108289193 instance=ExtResource("1_ta3mb")]
+mass = 2.0
+script = ExtResource("2_to0d4")
+patrol_distance = 150.0
+jump_chance = 0.02
+slam_chance = 0.05
+move_force = 1000.0
+jump_force = 1500.0
+
+[node name="ColorRect" parent="." index="0" unique_id=678962286]
+color = Color(0.78258485, 0.108773105, 4.813075e-07, 1)

@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://6phrbkdxq2y0"]
+
+[ext_resource type="Script" uid="uid://d3o4gee12g45q" path="res://ui/sound_button.gd" id="1_tym3l"]
+[ext_resource type="PackedScene" uid="uid://dp2d5yhhoypry" path="res://scene/component/random_stream_player.tscn" id="2_md1l6"]
+[ext_resource type="Script" uid="uid://o78rrs4a3mgk" path="res://addons/shaker/shaker.gd" id="12_nnbso"]
+
+[sub_resource type="Curve" id="Curve_g8o2l"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="SoundButton" type="Button" unique_id=910299844]
+custom_minimum_size = Vector2(75, 25)
+offset_right = 8.0
+offset_bottom = 8.0
+pivot_offset = Vector2(37, 12)
+focus_mode = 0
+text = "PRESS ME"
+script = ExtResource("1_tym3l")
+
+[node name="RandomStreamPlayer" parent="." unique_id=1284295355 instance=ExtResource("2_md1l6")]
+script = null
+
+[node name="BloodDebtShaker" type="Node" parent="." unique_id=1024173065 node_paths=PackedStringArray("target_node")]
+unique_name_in_owner = true
+script = ExtResource("12_nnbso")
+target_node = NodePath("..")
+target_property = &"rotation"
+min_value = 2.0
+max_value = -2.0
+duration = 1.0
+fall_off = SubResource("Curve_g8o2l")

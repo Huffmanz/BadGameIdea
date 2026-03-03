@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://ducvxidcmaamh"]
+
+[ext_resource type="Script" uid="uid://3y7bynnwlytm" path="res://scene/character/character_base.gd" id="1_k0x7n"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wirw2"]
+radius = 8.0
+
+[node name="CharacterBase" type="RigidBody2D" unique_id=2108289193]
+collision_layer = 2
+collision_mask = 13
+mass = 5.0
+can_sleep = false
+lock_rotation = true
+continuous_cd = 2
+script = ExtResource("1_k0x7n")
+move_force = 1500.0
+max_speed = 300.0
+jump_force = 2000.0
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=678962286]
+offset_left = -8.0
+offset_top = -24.0
+offset_right = 8.0
+color = Color(8.663535e-07, 0.702545, 0.4350364, 1)
+
+[node name="GroundCheck" type="RayCast2D" parent="." unique_id=2060706575]
+position = Vector2(0, -5)
+target_position = Vector2(0, 10)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=708783976]
+position = Vector2(0, -8)
+shape = SubResource("CircleShape2D_wirw2")

@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://couanhy2ybkhi"]
+
+[ext_resource type="Texture2D" uid="uid://cmnwluvw2xwwh" path="res://assets/ui/crosshair009.png" id="1_in4l2"]
+[ext_resource type="Script" path="res://autoload/cursor.gd" id="2_5rq4y"]
+
+[node name="Cursor" type="Sprite2D"]
+process_mode = 3
+top_level = true
+z_index = 100
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("1_in4l2")
+script = ExtResource("2_5rq4y")

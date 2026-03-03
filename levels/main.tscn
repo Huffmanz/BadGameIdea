@@ -1,0 +1,65 @@
+[gd_scene format=3 uid="uid://c8wak2m3n4p5q"]
+
+[ext_resource type="PackedScene" uid="uid://c5v7yj8kqwxh8" path="res://scene/fulcrum/fulcrum_lever.tscn" id="1_lever"]
+[ext_resource type="PackedScene" uid="uid://sbpofqbqkvxd" path="res://ui/wave_time_ui.tscn" id="2_m1504"]
+[ext_resource type="PackedScene" uid="uid://b1d7upf1u1seb" path="res://scene/character/player/player.tscn" id="2_player"]
+[ext_resource type="PackedScene" uid="uid://dx2xpus7nlxvw" path="res://manager/enemy_manager.tscn" id="3_ifaiv"]
+[ext_resource type="PackedScene" uid="uid://df6l8uwqvwnk7" path="res://manager/wave_time_manager.tscn" id="3_l8qe7"]
+[ext_resource type="PackedScene" uid="uid://bb6ec1vnraawc" path="res://scene/character/enemy/enemy_base.tscn" id="4_5k4jt"]
+
+[node name="Main" type="Node2D" unique_id=1929999526]
+
+[node name="WaveTimeManager" parent="." unique_id=1059691610 instance=ExtResource("3_l8qe7")]
+
+[node name="WaveTimeUI" parent="." unique_id=126312073 node_paths=PackedStringArray("wave_time_manager") instance=ExtResource("2_m1504")]
+wave_time_manager = NodePath("../WaveTimeManager")
+
+[node name="SpawnRect" type="ReferenceRect" parent="." unique_id=1910986220]
+offset_left = 76.0
+offset_top = -65.0
+offset_right = 555.0
+offset_bottom = -25.0
+
+[node name="EnemyManager" parent="." unique_id=699069309 node_paths=PackedStringArray("wave_timer_manager", "spawn_rect") instance=ExtResource("3_ifaiv")]
+basic_enemy_scene = ExtResource("4_5k4jt")
+wave_timer_manager = NodePath("../WaveTimeManager")
+max_enemies = 4
+spawn_rect = NodePath("../SpawnRect")
+
+[node name="FulcrumSystem" parent="." unique_id=436367095 instance=ExtResource("1_lever")]
+position = Vector2(311, 232)
+
+[node name="LeftWall" type="StaticBody2D" parent="." unique_id=1076559913]
+position = Vector2(-38, 388)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="LeftWall" unique_id=727903083]
+polygon = PackedVector2Array(0, -400, 50, -400, 50, 400, 0, 400)
+
+[node name="ColorRect" type="ColorRect" parent="LeftWall" unique_id=983379909]
+offset_right = 50.0
+offset_bottom = 800.0
+color = Color(0.3, 0.3, 0.3, 1)
+
+[node name="RightWall" type="StaticBody2D" parent="." unique_id=1513310726]
+position = Vector2(630, 368)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="RightWall" unique_id=1081983779]
+polygon = PackedVector2Array(0, -400, 50, -400, 50, 400, 0, 400)
+
+[node name="ColorRect" type="ColorRect" parent="RightWall" unique_id=1381204493]
+offset_right = 50.0
+offset_bottom = 800.0
+color = Color(0.3, 0.3, 0.3, 1)
+
+[node name="Entities" type="Node2D" parent="." unique_id=482700878 groups=["entities_layer"]]
+
+[node name="Player" parent="." unique_id=2108289193 instance=ExtResource("2_player")]
+position = Vector2(274, 100)
+collision_layer = 1
+collision_mask = 1
+mass = 20.0
+can_sleep = true
+lock_rotation = false
+continuous_cd = 0
+move_force = 7500.0
+jump_force = 10000.0

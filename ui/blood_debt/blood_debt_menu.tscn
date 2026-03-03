@@ -1,0 +1,107 @@
+[gd_scene load_steps=6 format=3 uid="uid://buinv3lliy3sv"]
+
+[ext_resource type="Script" path="res://ui/blood_debt/blood_debt_menu.gd" id="1_smiyk"]
+[ext_resource type="PackedScene" uid="uid://bj0yiievc88my" path="res://ui/blood_debt/blood_debt_card.tscn" id="1_yeu62"]
+[ext_resource type="Script" path="res://addons/shaker/shaker.gd" id="3_ik75u"]
+[ext_resource type="PackedScene" uid="uid://6phrbkdxq2y0" path="res://ui/sound_button.tscn" id="4_kepv8"]
+
+[sub_resource type="Curve" id="Curve_tab7r"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="BloodDebtMenu" type="CanvasLayer"]
+process_mode = 3
+script = ExtResource("1_smiyk")
+upgrade_card_scene = ExtResource("1_yeu62")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.34902)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_bottom = 30
+
+[node name="BloodContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="CurrentBloodContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer/BloodContainer"]
+layout_mode = 2
+
+[node name="CurrentBloodContainer" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/BloodContainer/CurrentBloodContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0.227451, 0.0352941, 0.0666667, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 32
+text = "Current Blood:"
+
+[node name="CurrentBloodAmount" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/BloodContainer/CurrentBloodContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0.227451, 0.0352941, 0.0666667, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 32
+text = "100"
+
+[node name="BloodDebtContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer/BloodContainer"]
+layout_mode = 2
+
+[node name="BloodDebtLabel" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/BloodContainer/BloodDebtContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0.227451, 0.0352941, 0.0666667, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 32
+text = "Blood Debt:"
+
+[node name="BloodDebtAmount" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/BloodContainer/BloodDebtContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0.227451, 0.0352941, 0.0666667, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 32
+text = "50
+"
+
+[node name="BloodDebtShaker" type="Node" parent="MarginContainer/VBoxContainer/MarginContainer/BloodContainer/BloodDebtContainer" node_paths=PackedStringArray("target_node")]
+unique_name_in_owner = true
+script = ExtResource("3_ik75u")
+target_node = NodePath("../BloodDebtAmount")
+target_property = &"rotation"
+min_value = 5.0
+max_value = -5.0
+duration = 1.0
+fall_off = SubResource("Curve_tab7r")
+
+[node name="PayDebtButton" parent="MarginContainer/VBoxContainer/MarginContainer/BloodContainer" instance=ExtResource("4_kepv8")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "PAY"
+
+[node name="CardContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 12

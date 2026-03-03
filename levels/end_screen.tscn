@@ -1,0 +1,78 @@
+[gd_scene format=3 uid="uid://bt35gjr0l3ft4"]
+
+[ext_resource type="Script" uid="uid://digw8kwr8wgr6" path="res://levels/end_screen.gd" id="1_2dv74"]
+[ext_resource type="PackedScene" uid="uid://6phrbkdxq2y0" path="res://ui/sound_button.tscn" id="2_fbcvw"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_si8jn"]
+texture_margin_left = 4.0
+texture_margin_top = 6.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+region_rect = Rect2(0, 0, 16, 16)
+
+[node name="EndScreen" type="CanvasLayer" unique_id=1410520293]
+process_mode = 3
+script = ExtResource("1_2dv74")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1716435706]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.556863)
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1489150092]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer" unique_id=2139453418]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxTexture_si8jn")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/PanelContainer" unique_id=451470506]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer" unique_id=1072600593]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=212478621]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0.227451, 0.0352941, 0.0666667, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 32
+text = "Game Over!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Wave Label" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=563352995]
+unique_name_in_owner = true
+layout_mode = 2
+text = "You Survived 10 Waves"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1591958476]
+layout_mode = 2
+
+[node name="RestartButton" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer" unique_id=1236153108 instance=ExtResource("2_fbcvw")]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Restart"
+
+[node name="QuitButton" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer" unique_id=1521979857 instance=ExtResource("2_fbcvw")]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Quit to Menu"
