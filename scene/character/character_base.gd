@@ -49,7 +49,7 @@ func _check_grounded() -> void:
 					continue
 				var character_side = sign(lever.global_position.x - character.global_position.x)
 				if character_side != side:
-					launch_character(character, character.jump_force / 4.0)
+					launch_character(character, Vector2.DOWN * character.jump_force / 4.0)
 		if state == State.SLAMMING and is_grounded:
 			var offset = global_position - lever.global_position
 			lever.apply_impulse(Vector2.DOWN * slam_force * (fall_time + 1.0), offset)
@@ -62,13 +62,15 @@ func _check_grounded() -> void:
 					continue
 				var character_side = sign(lever.global_position.x - character.global_position.x)
 				if character_side != side:
-					launch_character(character, character.jump_force)
+					#rotate force in same direction as the lever
+					var force_direction : Vector2 = Vector2.DOWN.rotated(lever.global_rotation)
+					launch_character(character, character.jump_force * force_direction)
 
 
 
-func launch_character(character: CharacterBase, force: float) -> void:
+func launch_character(character: CharacterBase, force: Vector2) -> void:
 	var offset = character.global_position - lever.global_position
-	character.apply_impulse(Vector2.DOWN * force, offset)
+	character.apply_impulse(force, offset)
 
 func _update_state(delta: float) -> void:
 	if is_grounded:
