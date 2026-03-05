@@ -34,11 +34,11 @@ physics_material_override = SubResource("PhysicsMaterial_cnwh2")
 can_sleep = false
 continuous_cd = 1
 linear_damp = 20.0
+angular_damp_mode = 1
 angular_damp = 3.0
 script = ExtResource("1_lever")
 lever_length = 250.0
 max_rotation_angle = 45.0
-angular_damping_value = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FulcrumLever" unique_id=864029450]
 shape = SubResource("RectangleShape2D_lever")
@@ -54,7 +54,7 @@ color = Color(0.6, 0.4, 0.2, 1)
 [node name="PinJoint2D" type="PinJoint2D" parent="." unique_id=886519786]
 node_a = NodePath("../FulcrumPoint")
 node_b = NodePath("../FulcrumLever")
-bias = 0.9
+bias = 0.5
 angular_limit_enabled = true
 angular_limit_lower = -0.7853982
 angular_limit_upper = 0.7853982

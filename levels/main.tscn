@@ -15,9 +15,9 @@
 wave_time_manager = NodePath("../WaveTimeManager")
 
 [node name="SpawnRect" type="ReferenceRect" parent="." unique_id=1910986220]
-offset_left = 76.0
+offset_left = 168.0
 offset_top = -65.0
-offset_right = 555.0
+offset_right = 451.0
 offset_bottom = -25.0
 
 [node name="EnemyManager" parent="." unique_id=699069309 node_paths=PackedStringArray("wave_timer_manager", "spawn_rect") instance=ExtResource("3_ifaiv")]
@@ -55,11 +55,6 @@ color = Color(0.3, 0.3, 0.3, 1)
 
 [node name="Player" parent="." unique_id=2108289193 instance=ExtResource("2_player")]
 position = Vector2(274, 100)
-collision_layer = 1
-collision_mask = 1
-mass = 20.0
+collision_mask = 13
 can_sleep = true
 lock_rotation = false
-continuous_cd = 0
-move_force = 7500.0
-jump_force = 10000.0

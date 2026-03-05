@@ -16,7 +16,7 @@ func _ready() -> void:
 
 func _physics_process(_delta: float) -> void:
 	#_enforce_rotation_limits()
-	
+	_enforce_rotation_limits()
 	# Dampen small movements to prevent drift
 	if abs(angular_velocity) < 0.01:
 		angular_velocity = 0.0
