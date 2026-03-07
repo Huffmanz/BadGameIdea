@@ -5,6 +5,10 @@ signal camera_shake(camera_shake_strength: float)
 signal player_health_updated(current_health: float)
 signal player_died()
 
+#enemy management
+signal enemy_spawned(enemy: Node2D)
+signal enemy_died()
+
 #wave management
 signal wave_started(wave_number: int)
 signal wave_complete(wave_number: int)

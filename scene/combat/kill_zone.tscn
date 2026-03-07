@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://cnxsxp4vy5v5i"]
+
+[ext_resource type="Script" uid="uid://bf1eiefomrom" path="res://scene/combat/kill_zone.gd" id="1_cipkv"]
+
+[node name="KillZone" type="Area2D" unique_id=1790013528]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_cipkv")

@@ -16,7 +16,7 @@ func _ready() -> void:
 
 func _physics_process(_delta: float) -> void:
 	#_enforce_rotation_limits()
-	_enforce_rotation_limits()
+	#_enforce_rotation_limits()
 	# Dampen small movements to prevent drift
 	if abs(angular_velocity) < 0.01:
 		angular_velocity = 0.0
@@ -24,10 +24,11 @@ func _physics_process(_delta: float) -> void:
 		linear_velocity = Vector2.ZERO
 	
 	# Apply small torque toward neutral position
-	var angle = rotation
-	if abs(angle) > 0.01:
-		var return_torque = -angle * 500.0
-		apply_torque(return_torque)
+	#var angle = rotation
+	#if abs(angle) > 0.01:
+	#	var return_torque = -angle * 5000.0
+	#	print("return_torque: ", return_torque)
+	#	apply_torque(return_torque)
 
 func _enforce_rotation_limits() -> void:
 	var angle_deg = rad_to_deg(rotation)

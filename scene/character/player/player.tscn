@@ -4,10 +4,16 @@
 [ext_resource type="PackedScene" uid="uid://ducvxidcmaamh" path="res://scene/character/character_base.tscn" id="1_uldb0"]
 [ext_resource type="Script" uid="uid://c2boltnm1sewl" path="res://scene/character/player/camera.gd" id="2_uldb0"]
 
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_45qvi"]
+bounce = 31.75
+absorbent = true
+
 [node name="Player" unique_id=2108289193 groups=["player"] instance=ExtResource("1_uldb0")]
+physics_material_override = SubResource("PhysicsMaterial_45qvi")
 continuous_cd = 1
 script = ExtResource("1_player")
 slam_force = 8000.0
+dash_force = 5000.0
 
 [node name="ColorRect" parent="." index="0" unique_id=678962286]
 color = Color(0.2, 0.6, 1, 1)

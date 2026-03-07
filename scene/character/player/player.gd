@@ -12,5 +12,8 @@ func _handle_input() -> void:
 	if Input.is_action_just_pressed("move_down") and not is_grounded:
 		start_slam()
 
+	if Input.is_action_just_pressed("dash"):
+		start_dash()
+
 func get_move_input() -> float:
 	return Input.get_axis("move_left", "move_right")

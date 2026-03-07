@@ -14,7 +14,7 @@ func init(wave_number: int):
 	wave_label.text = format_string % [wave_number]
 	
 func _on_restart_pressed() -> void:
-	ScreenTransition.transition_to_scene("res://levels/world.tscn")
+	ScreenTransition.transition_to_scene("res://levels/main.tscn")
 	
 func _on_quit_pressed() -> void:
 	ScreenTransition.transition_to_scene("res://levels/main_menu.tscn")

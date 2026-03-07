@@ -17,8 +17,7 @@ focus_mode = 0
 text = "PRESS ME"
 script = ExtResource("1_tym3l")
 
-[node name="RandomStreamPlayer" parent="." unique_id=1284295355 instance=ExtResource("2_md1l6")]
-script = null
+[node name="RandomStreamPlayer" parent="." unique_id=1470295987 instance=ExtResource("2_md1l6")]
 
 [node name="BloodDebtShaker" type="Node" parent="." unique_id=1024173065 node_paths=PackedStringArray("target_node")]
 unique_name_in_owner = true

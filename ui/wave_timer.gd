@@ -24,4 +24,5 @@ func _wave_started(wave_number:int):
 	wave_number_label.text = str(wave_number)
 
 func _wave_complete(wave_number: int):
-	visible = false
+	pass
+	#visible = false

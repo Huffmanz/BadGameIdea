@@ -1,15 +1,17 @@
 extends RigidBody2D
 class_name CharacterBase
 
-enum State { IDLE, WALKING, JUMPING, FALLING, SLAMMING }
+enum State { IDLE, WALKING, JUMPING, FALLING, SLAMMING, DASHING }
 
 @export var move_force: float = 5000.0
 @export var max_speed: float = 200.0
 @export var jump_force: float = 25000.0
 @export var air_control: float = 0.3
 @export var slam_force: float = 10000.0
+@export var dash_force: float = 10000.0
 
 @onready var ground_check_ray: RayCast2D = $GroundCheck
+@onready var dash_timer: Timer = $DashTimer
 
 var lever : RigidBody2D = null
 
@@ -25,6 +27,10 @@ func _ready() -> void:
 	linear_damp = 0.0
 	contact_monitor = true
 	max_contacts_reported = 4
+	dash_timer.timeout.connect(end_dash)
+
+func end_dash() -> void:
+	pass
 
 func _physics_process(delta: float) -> void:
 	_check_grounded()
@@ -32,6 +38,10 @@ func _physics_process(delta: float) -> void:
 	_apply_movement(delta)
 
 func _check_grounded() -> void:	
+	if lever:
+		#facing down by default
+		ground_check_ray.look_at(lever.global_position)
+		ground_check_ray.rotation -= PI / 2.0
 	if ground_check_ray:
 		ground_check_ray.force_raycast_update()
 		is_grounded = ground_check_ray.is_colliding()
@@ -41,30 +51,24 @@ func _check_grounded() -> void:
 			var offset = global_position - lever.global_position
 			lever.apply_impulse(Vector2.DOWN * slam_force * (fall_time + 1.0), offset)
 
-			var side = sign(lever.global_position.x - global_position.x)
 			#find all other characters on the lever and apply an impulse to them
 			var characters = lever.get_tree().get_nodes_in_group("character")
 			for character in characters:
 				if character == self or !character.is_grounded:
 					continue
-				var character_side = sign(lever.global_position.x - character.global_position.x)
-				if character_side != side:
-					launch_character(character, Vector2.DOWN * character.jump_force / 4.0)
+				launch_character(character, jump_force * Vector2.DOWN)
 		if state == State.SLAMMING and is_grounded:
+			GameEvents.emit_camera_shake(10.0)
+			Utils.frameFreeze(0.5, 0.1)
 			var offset = global_position - lever.global_position
 			lever.apply_impulse(Vector2.DOWN * slam_force * (fall_time + 1.0), offset)
 
-			var side = sign(lever.global_position.x - global_position.x)
 			#find all other characters on the lever and apply an impulse to them
 			var characters = lever.get_tree().get_nodes_in_group("character")
 			for character in characters:
 				if character == self or !character.is_grounded:
 					continue
-				var character_side = sign(lever.global_position.x - character.global_position.x)
-				if character_side != side:
-					#rotate force in same direction as the lever
-					var force_direction : Vector2 = Vector2.DOWN.rotated(lever.global_rotation)
-					launch_character(character, character.jump_force * force_direction)
+				launch_character(character, jump_force * Vector2.DOWN)
 
 
 
@@ -73,6 +77,9 @@ func launch_character(character: CharacterBase, force: Vector2) -> void:
 	character.apply_impulse(force, offset)
 
 func _update_state(delta: float) -> void:
+	if state == State.DASHING:
+		return
+
 	if is_grounded:
 		fall_time = 0.0
 		if abs(linear_velocity.x) > 10:
@@ -93,14 +100,20 @@ func _apply_movement(delta: float) -> void:
 		var force_multiplier = 1.0
 		if not is_grounded:
 			force_multiplier = air_control
-		
+				
 		var target_velocity = move_input * max_speed
+		if state == State.DASHING:
+			target_velocity = move_input * dash_force
+			force_multiplier = 1.0
+			dash_timer.start()
+			state = State.IDLE
 		var velocity_diff = target_velocity - linear_velocity.x
 		var force = velocity_diff * move_force * force_multiplier * delta
 		apply_central_force(Vector2(force, 0))
 	
 
 func jump() -> void:
+	print(is_grounded, " ", state)
 	if is_grounded:
 		apply_central_impulse(Vector2(0, -jump_force))
 		state = State.JUMPING
@@ -113,6 +126,14 @@ func start_slam() -> void:
 	if not is_grounded and state != State.SLAMMING:
 		state = State.SLAMMING
 		linear_velocity.y = max_speed * 2.0  # Fast downward velocity
+
+
+func start_dash() -> void:
+	if !dash_timer.is_stopped():
+		return
+	if (is_grounded or state == State.JUMPING or state == State.FALLING) and state != State.DASHING:
+		state = State.DASHING
+		
 
 func get_move_input() -> float:
 	return 0.0

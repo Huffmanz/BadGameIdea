@@ -12,10 +12,9 @@ func _ready():
 func _process(delta):
 	var SCREEN_CENTER = get_viewport_rect().size / 2
 	global_position = SCREEN_CENTER
-	if shake_strength > 0:
+	if !is_zero_approx(shake_strength):
 		shake_strength = lerpf(shake_strength, 0, shakeFade * delta)
 		offset = randomOffset()
-		print("Shaking camera: ", offset)
 		
 func apply_shake(camera_shake_strength: float):
 	shake_strength = camera_shake_strength
