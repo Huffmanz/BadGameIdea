@@ -24,12 +24,12 @@ func _ready():
 	GameEvents.wave_started.connect(_wave_started)
 	GameEvents.enemy_died.connect(_on_enemy_died)
 	
-func _wave_complete(wave_number: int):
+func _wave_complete(_wave_number: int):
 	wave_complete = true
-	timer.wait_time = base_spawn_time
 	timer.stop()
+	timer.wait_time = base_spawn_time
 	
-func _wave_started(wave_number: int):
+func _wave_started(_wave_number: int):
 	timer.start()
 	wave_complete = false
 	enemy_count = 0
@@ -46,6 +46,8 @@ func get_spawn_position():
 			
 	
 func on_timer_timeout():
+	if wave_complete:
+		return
 	timer.start()
 
 	var player = get_tree().get_first_node_in_group("player") as Node2D

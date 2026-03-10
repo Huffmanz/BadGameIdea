@@ -36,10 +36,16 @@ func _reduce_next_wave_time(percentage: float):
 
 func get_time_elapsed():
 	return timer.time_left
-	
-func on_timer_timeout():
+
+func _on_wave_start_next():
 	ScreenTransition.transition()
 	await ScreenTransition.transitioned_halfway
+	start_wave()
+	
+	
+func on_timer_timeout():
+	#ScreenTransition.transition()
+	#await ScreenTransition.transitioned_halfway
 	wave_time_percent = 0
 	GameEvents.wave_complete.emit(current_wave)
 	

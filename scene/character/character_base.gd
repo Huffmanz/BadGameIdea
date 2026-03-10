@@ -56,25 +56,18 @@ func _check_grounded() -> void:
 			for character in characters:
 				if character == self or !character.is_grounded:
 					continue
-				launch_character(character, jump_force * Vector2.DOWN)
+				Utils.launch_character(character, lever, jump_force  / 2.0 * Vector2.DOWN)
 		if state == State.SLAMMING and is_grounded:
 			GameEvents.emit_camera_shake(10.0)
-			Utils.frameFreeze(0.5, 0.1)
-			var offset = global_position - lever.global_position
-			lever.apply_impulse(Vector2.DOWN * slam_force * (fall_time + 1.0), offset)
-
 			#find all other characters on the lever and apply an impulse to them
 			var characters = lever.get_tree().get_nodes_in_group("character")
 			for character in characters:
 				if character == self or !character.is_grounded:
 					continue
-				launch_character(character, jump_force * Vector2.DOWN)
+				Utils.launch_character(character, lever, jump_force  * Vector2.DOWN)
+			var offset = global_position - lever.global_position
+			lever.apply_impulse(Vector2.DOWN * slam_force * (fall_time + 1.0), offset)
 
-
-
-func launch_character(character: CharacterBase, force: Vector2) -> void:
-	var offset = character.global_position - lever.global_position
-	character.apply_impulse(force, offset)
 
 func _update_state(delta: float) -> void:
 	if state == State.DASHING:
@@ -113,7 +106,6 @@ func _apply_movement(delta: float) -> void:
 	
 
 func jump() -> void:
-	print(is_grounded, " ", state)
 	if is_grounded:
 		apply_central_impulse(Vector2(0, -jump_force))
 		state = State.JUMPING

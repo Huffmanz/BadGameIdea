@@ -27,3 +27,7 @@ func get_player() -> Player:
 		player_ref = get_tree().get_first_node_in_group("player") as Player
 	return player_ref
 	
+func launch_character(character: CharacterBase, lever: RigidBody2D, force: Vector2) -> void:
+	var offset = character.global_position - lever.global_position
+	character.apply_impulse(force, offset)
+
